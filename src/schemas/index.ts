@@ -2,7 +2,7 @@ import z from "zod";
 
 import { WeekDay } from "../generated/prisma/enums.js";
 
-export const ErrorSchemas = z.object({
+export const ErrorSchema = z.object({
   error: z.string(),
   code: z.string(),
 });

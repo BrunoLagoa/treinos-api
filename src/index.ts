@@ -10,7 +10,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
-import { z } from "zod/v4";
+import { z } from "zod";
 
 import { auth } from "./lib/auth.js";
 import { workoutPlanRoutes } from "./routes/workout-plan.js";

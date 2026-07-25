@@ -3,3 +3,8 @@ dist/
 data/
 pnpm-lock.yaml
 .env
+
+# Código gerado e skills vendorizadas
+src/generated/
+.agents/
+.claude/skills/

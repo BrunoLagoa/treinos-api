@@ -4,7 +4,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 
 import { NotFoundError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
-import { ErrorSchemas, WorkoutPlanSchema } from "../schemas/index.js";
+import { ErrorSchema, WorkoutPlanSchema } from "../schemas/index.js";
 import { CreateWorkoutPlan } from "../usecases/CreateWorkoutPlan.js";
 
 export const workoutPlanRoutes = async (app: FastifyInstance) => {
@@ -12,13 +12,15 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
     method: "POST",
     url: "/",
     schema: {
+      tags: ["Workout Plan"],
+      summary: "Create a workout plan",
       body: WorkoutPlanSchema.omit({ id: true }),
       response: {
         201: WorkoutPlanSchema,
-        400: ErrorSchemas,
-        401: ErrorSchemas,
-        404: ErrorSchemas,
-        500: ErrorSchemas,
+        400: ErrorSchema,
+        401: ErrorSchema,
+        404: ErrorSchema,
+        500: ErrorSchema,
       },
     },
     handler: async (request, reply) => {
