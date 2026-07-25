@@ -17,6 +17,8 @@
 - Uma rota deve **SEMPRE** instanciar e chamar um use case.
 - **SEMPRE** trate os erros lançados pelo use case.
 - **SEMPRE** inclua `tags` e `summary` no schema da rota para documentação no Swagger/OpenAPI.
+  - `tags` agrupa as rotas por **recurso**, e não por sub-recurso. Todas as rotas do mesmo arquivo de rotas compartilham a **mesma** tag. Exemplo: `POST /workout-plans` e `POST /workout-plans/:workoutPlanId/days/:workoutDayId/sessions` usam ambas `tags: ["Workout Plan"]`.
+  - `summary` descreve a operação em inglês, no imperativo e sem ponto final. Exemplo: `"Create a workout plan"`, `"Start a workout session"`.
 
 ### Exemplo:
 
