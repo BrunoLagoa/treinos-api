@@ -14,6 +14,7 @@ import { z } from "zod";
 
 import { auth } from "./lib/auth.js";
 import { homeRoutes } from "./routes/home.js";
+import { meRoutes } from "./routes/me.js";
 import { statsRoutes } from "./routes/stats.js";
 import { workoutPlanRoutes } from "./routes/workout-plan.js";
 
@@ -135,6 +136,7 @@ app.route({
 await app.register(workoutPlanRoutes, { prefix: "/workout-plans" });
 await app.register(homeRoutes, { prefix: "/home" });
 await app.register(statsRoutes, { prefix: "/stats" });
+await app.register(meRoutes, { prefix: "/me" });
 
 try {
   await app.listen({ port: Number(process.env.PORT) || 8081 });

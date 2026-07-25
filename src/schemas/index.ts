@@ -55,6 +55,15 @@ export const UpdateWorkoutSessionResponseSchema = z.object({
   completedAt: z.iso.datetime(),
 });
 
+export const UserTrainDataSchema = z.object({
+  userId: z.string(),
+  userName: z.string(),
+  weightInGrams: z.number().int().positive(),
+  heightInCentimeters: z.number().int().positive(),
+  age: z.number().int().positive(),
+  bodyFatPercentage: z.number().int().min(0).max(100),
+});
+
 export const ListWorkoutPlansQuerySchema = z.object({
   active: z.stringbool().optional(),
 });

@@ -22,11 +22,13 @@
   "author": "Bruno Castro",
   "license": "ISC",
   "dependencies": {
+    "@ai-sdk/openai": "^4.0.20",
     "@fastify/cors": "^11.3.0",
     "@fastify/swagger": "^9.8.1",
     "@prisma/adapter-pg": "^7.9.0",
     "@prisma/client": "^7.9.0",
     "@scalar/fastify-api-reference": "^1.63.0",
+    "ai": "^7.0.37",
     "better-auth": "^1.6.25",
     "dayjs": "^1.11.21",
     "dotenv": "^17.4.2",
