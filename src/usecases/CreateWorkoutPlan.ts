@@ -41,7 +41,7 @@ interface OutputWorkoutDay {
   weekDay: WeekDay;
   isRest: boolean;
   estimatedTimeInSeconds: number;
-  coverImageUrl: string | null;
+  coverImageUrl?: string;
   exercises: OutputExercise[];
 }
 
@@ -82,7 +82,7 @@ export class CreateWorkoutPlan {
               weekDay: workoutDay.weekDay,
               isRest: workoutDay.isRest,
               estimatedTimeInSeconds: workoutDay.estimatedTimeInSeconds,
-              coverImageUrl: workoutDay.coverImageUrl,
+              coverImageUrl: workoutDay.coverImageUrl ?? undefined,
               exercises: {
                 create: workoutDay.exercises.map((exercise) => ({
                   order: exercise.order,
@@ -125,7 +125,7 @@ export class CreateWorkoutPlan {
           weekDay: workoutDay.weekDay,
           isRest: workoutDay.isRest,
           estimatedTimeInSeconds: workoutDay.estimatedTimeInSeconds,
-          coverImageUrl: workoutDay.coverImageUrl,
+          coverImageUrl: workoutDay.coverImageUrl ?? undefined,
           exercises: workoutDay.exercises.map((exercise) => ({
             id: exercise.id,
             order: exercise.order,
