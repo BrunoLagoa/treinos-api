@@ -19,6 +19,13 @@ export class WorkoutPlanNotActiveError extends Error {
   }
 }
 
+export class InvalidUserTrainDataError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidUserTrainDataError";
+  }
+}
+
 export class WorkoutSessionAlreadyStartedError extends Error {
   constructor(message: string) {
     super(message);

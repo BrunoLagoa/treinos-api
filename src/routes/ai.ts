@@ -42,7 +42,7 @@ Quando o usuário quiser criar um plano de treino:
 - Pergunte o objetivo, quantos dias por semana ele pode treinar e se tem restrições físicas ou lesões.
 - Poucas perguntas, simples e diretas.
 - O plano DEVE ter exatamente 7 dias (MONDAY a SUNDAY).
-- Dias sem treino devem ter: \`isRest: true\`, \`exercises: []\`, \`estimatedDurationInSeconds: 0\`.
+- Dias sem treino devem ter: \`isRest: true\`, \`exercises: []\`, \`estimatedTimeInSeconds: 0\`.
 - Chame a tool \`createWorkoutPlan\` para salvar o plano.
 
 ### Divisões de Treino (Splits)
@@ -90,7 +90,10 @@ export const aiRoutes = async (app: FastifyInstance) => {
       });
 
       if (!session) {
-        return reply.status(401).send({ error: "Unauthorized" });
+        return reply.status(401).send({
+          error: "Unauthorized",
+          code: "UNAUTHORIZED",
+        });
       }
 
       const userId = session.user.id;
@@ -117,11 +120,13 @@ export const aiRoutes = async (app: FastifyInstance) => {
             inputSchema: z.object({
               weightInGrams: z
                 .number()
+                .int()
                 .describe("Peso do usuário em gramas (ex: 70kg = 70000)"),
               heightInCentimeters: z
                 .number()
+                .int()
                 .describe("Altura do usuário em centímetros"),
-              age: z.number().describe("Idade do usuário"),
+              age: z.number().int().describe("Idade do usuário"),
               bodyFatPercentage: z
                 .number()
                 .int()

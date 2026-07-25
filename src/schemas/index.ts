@@ -64,6 +64,14 @@ export const UserTrainDataSchema = z.object({
   bodyFatPercentage: z.number().int().min(0).max(100),
 });
 
+export const UpsertUserTrainDataSchema = UserTrainDataSchema.omit({
+  userName: true,
+});
+
+export const UpsertUserTrainDataBodySchema = UpsertUserTrainDataSchema.omit({
+  userId: true,
+});
+
 export const ListWorkoutPlansQuerySchema = z.object({
   active: z.stringbool().optional(),
 });
