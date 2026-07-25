@@ -56,19 +56,14 @@ interface OutputExercise {
 
 export class CreateWorkoutPlan {
   async execute(workoutPlan: InputWorkoutPlan): Promise<OutputWorkoutPlan> {
-    const existingWorkoutPlan = await prisma.workoutPlan.findFirst({
-      where: {
-        isActive: true,
-      },
-    });
-
     return prisma.$transaction(async (tx) => {
-      if (existingWorkoutPlan) {
-        await tx.workoutPlan.update({
-          where: { id: existingWorkoutPlan.id },
-          data: { isActive: false },
-        });
-      }
+      await tx.workoutPlan.updateMany({
+        where: {
+          userId: workoutPlan.userId,
+          isActive: true,
+        },
+        data: { isActive: false },
+      });
 
       const createdWorkoutPlan = await tx.workoutPlan.create({
         data: {
