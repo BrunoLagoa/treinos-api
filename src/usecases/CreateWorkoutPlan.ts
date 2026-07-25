@@ -23,6 +23,7 @@ interface WorkoutDay {
   weekDay: WeekDay;
   isRest: boolean;
   estimatedTimeInSeconds: number;
+  coverImageUrl?: string | null;
   exercises: Exercise[];
 }
 
@@ -40,6 +41,7 @@ interface OutputWorkoutDay {
   weekDay: WeekDay;
   isRest: boolean;
   estimatedTimeInSeconds: number;
+  coverImageUrl: string | null;
   exercises: OutputExercise[];
 }
 
@@ -80,6 +82,7 @@ export class CreateWorkoutPlan {
               weekDay: workoutDay.weekDay,
               isRest: workoutDay.isRest,
               estimatedTimeInSeconds: workoutDay.estimatedTimeInSeconds,
+              coverImageUrl: workoutDay.coverImageUrl,
               exercises: {
                 create: workoutDay.exercises.map((exercise) => ({
                   order: exercise.order,
@@ -109,7 +112,30 @@ export class CreateWorkoutPlan {
         throw new NotFoundError("Workout plan not found after creation.");
       }
 
-      return result;
+      return {
+        id: result.id,
+        userId: result.userId,
+        name: result.name,
+        isActive: result.isActive,
+        createdAt: result.createdAt,
+        updatedAt: result.updatedAt,
+        workoutDays: result.workoutDays.map((workoutDay) => ({
+          id: workoutDay.id,
+          name: workoutDay.name,
+          weekDay: workoutDay.weekDay,
+          isRest: workoutDay.isRest,
+          estimatedTimeInSeconds: workoutDay.estimatedTimeInSeconds,
+          coverImageUrl: workoutDay.coverImageUrl,
+          exercises: workoutDay.exercises.map((exercise) => ({
+            id: exercise.id,
+            order: exercise.order,
+            name: exercise.name,
+            sets: exercise.sets,
+            reps: exercise.reps,
+            restTimeInSeconds: exercise.restTimeInSeconds,
+          })),
+        })),
+      };
     });
   }
 }
