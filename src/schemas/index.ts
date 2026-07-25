@@ -108,6 +108,30 @@ export const GetWorkoutDayResponseSchema = z.object({
   ),
 });
 
+export const GetStatsQuerySchema = z
+  .object({
+    from: z.iso.date(),
+    to: z.iso.date(),
+  })
+  .refine((query) => query.from <= query.to, {
+    message: "from must be earlier than or equal to to",
+    path: ["from"],
+  });
+
+export const GetStatsResponseSchema = z.object({
+  workoutStreak: z.number().int(),
+  consistencyByDay: z.record(
+    z.iso.date(),
+    z.object({
+      workoutDayCompleted: z.boolean(),
+      workoutDayStarted: z.boolean(),
+    }),
+  ),
+  completedWorkoutsCount: z.number().int(),
+  conclusionRate: z.number(),
+  totalTimeInSeconds: z.number().int(),
+});
+
 export const GetHomeParamsSchema = z.object({
   date: z.iso.date(),
 });
