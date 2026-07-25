@@ -55,6 +55,20 @@ export const UpdateWorkoutSessionResponseSchema = z.object({
   completedAt: z.iso.datetime(),
 });
 
+export const ListWorkoutPlansQuerySchema = z.object({
+  active: z.stringbool().optional(),
+});
+
+export const ListWorkoutPlansResponseSchema = z.array(
+  z.object({
+    id: z.uuid(),
+    name: z.string(),
+    isActive: z.boolean(),
+    workoutDaysCount: z.number().int(),
+    createdAt: z.iso.datetime(),
+  }),
+);
+
 export const GetWorkoutPlanParamsSchema = z.object({
   workoutPlanId: z.uuid(),
 });
