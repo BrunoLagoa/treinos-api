@@ -28,6 +28,7 @@
     "@prisma/client": "^7.9.0",
     "@scalar/fastify-api-reference": "^1.63.0",
     "better-auth": "^1.6.25",
+    "dayjs": "^1.11.21",
     "dotenv": "^17.4.2",
     "fastify": "^5.10.0",
     "fastify-type-provider-zod": "^7.0.0",
