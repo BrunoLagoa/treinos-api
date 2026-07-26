@@ -56,7 +56,7 @@ await app.register(fastifySwagger, {
     servers: [
       {
         description: "Localhost",
-        url: env.WEB_APP_BASE_URL,
+        url: env.API_BASE_URL,
       },
     ],
   },
