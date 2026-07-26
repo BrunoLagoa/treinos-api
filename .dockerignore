@@ -1,0 +1,17 @@
+node_modules
+dist
+src/generated
+
+.git
+.gitignore
+
+.env
+.env.*
+
+.claude
+.agents
+
+*.log
+.DS_Store
+Dockerfile
+.dockerignore

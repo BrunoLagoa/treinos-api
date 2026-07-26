@@ -7,7 +7,7 @@ RUN corepack enable && corepack prepare pnpm@11.17.0 --activate
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY prisma ./prisma/
 
 # ------- Dependencies -------
@@ -19,6 +19,8 @@ RUN pnpm install --frozen-lockfile
 FROM deps AS build
 
 COPY . .
+
+RUN pnpm exec prisma generate
 
 RUN pnpm run build && cp -r src/generated dist/generated
 
