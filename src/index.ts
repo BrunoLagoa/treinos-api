@@ -159,7 +159,7 @@ await app.register(meRoutes, { prefix: "/me" });
 await app.register(aiRoutes, { prefix: "/ai" });
 
 try {
-  await app.listen({ port: Number(env.PORT) || 8080 });
+  await app.listen({ host: "0.0.0.0", port: Number(env.PORT) || 8080 });
 } catch (err) {
   app.log.error(err);
   process.exit(1);
