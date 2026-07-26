@@ -9,7 +9,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "build": "tsc"
+    "build": "pnpm exec prisma generate && tsc"
   },
   "engines": {
     "node": "24"
