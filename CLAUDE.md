@@ -43,7 +43,7 @@ pnpm exec prisma studio
 ## Setup — pontos de atenção
 
 - `src/generated/prisma` está **gitignored**. Depois de um clone novo ou de qualquer mudança no `schema.prisma`, é preciso rodar `prisma generate` ou nada typecheca.
-- Copie `.env.example` para `.env`. `DATABASE_URL`, `BETTER_AUTH_SECRET` e `BETTER_AUTH_URL` são obrigatórios em runtime.
+- Copie `.env.example` para `.env`. `DATABASE_URL`, `BETTER_AUTH_SECRET` e `API_BASE_URL` são obrigatórios em runtime.
 - A precedência de porta é inconsistente: `.env.example` sugere `PORT=3000`, mas `src/index.ts` usa fallback **8081**. Já o origin do CORS (`src/index.ts`) e o `trustedOrigins` do better-auth (`src/lib/auth.ts`) estão fixos em `http://localhost:3000` — esse valor é a origem do _frontend_, não a porta desta API.
 
 ## Arquitetura
