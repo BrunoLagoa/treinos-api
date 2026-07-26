@@ -76,6 +76,9 @@ SEMPRE forneça um \`coverImageUrl\` para cada dia de treino. Escolha com base n
 
 Alterne entre as duas opções de cada categoria para variar. Dias de descanso usam imagem de superior.`;
 
+const toJsonValue = <T>(value: T): unknown =>
+  JSON.parse(JSON.stringify(value ?? null));
+
 export const aiRoutes = async (app: FastifyInstance) => {
   app.withTypeProvider<ZodTypeProvider>().route({
     method: "POST",
@@ -104,7 +107,10 @@ export const aiRoutes = async (app: FastifyInstance) => {
         model: google("gemini-2.5-flash"),
         system: SYSTEM_PROMPT,
         messages: await convertToModelMessages(messages),
-        stopWhen: stepCountIs(5),
+        stopWhen: stepCountIs(10),
+        onError: ({ error }) => {
+          request.log.error({ err: error }, "AI chat stream failed");
+        },
         tools: {
           getUserTrainData: tool({
             description:
@@ -112,7 +118,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
             inputSchema: z.object({}),
             execute: async () => {
               const getUserTrainData = new GetUserTrainData();
-              return getUserTrainData.execute({ userId });
+              return toJsonValue(await getUserTrainData.execute({ userId }));
             },
           }),
           updateUserTrainData: tool({
@@ -137,7 +143,9 @@ export const aiRoutes = async (app: FastifyInstance) => {
             }),
             execute: async (params) => {
               const upsertUserTrainData = new UpsertUserTrainData();
-              return upsertUserTrainData.execute({ userId, ...params });
+              return toJsonValue(
+                await upsertUserTrainData.execute({ userId, ...params }),
+              );
             },
           }),
           getWorkoutPlans: tool({
@@ -146,7 +154,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
             inputSchema: z.object({}),
             execute: async () => {
               const listWorkoutPlans = new ListWorkoutPlans();
-              return listWorkoutPlans.execute({ userId });
+              return toJsonValue(await listWorkoutPlans.execute({ userId }));
             },
           }),
           createWorkoutPlan: tool({
@@ -203,11 +211,13 @@ export const aiRoutes = async (app: FastifyInstance) => {
             }),
             execute: async (input) => {
               const createWorkoutPlan = new CreateWorkoutPlan();
-              return createWorkoutPlan.execute({
-                userId,
-                name: input.name,
-                workoutDays: input.workoutDays,
-              });
+              return toJsonValue(
+                await createWorkoutPlan.execute({
+                  userId,
+                  name: input.name,
+                  workoutDays: input.workoutDays,
+                }),
+              );
             },
           }),
         },
